@@ -1,8 +1,18 @@
-
 import Modal from 'react-modal';
-import PropTypes from 'prop-types';
 
-const ImageModal = ({ image, onClose }) => {
+interface ImageModalProps {
+  image: {
+    urls: {
+      regular: string;
+    };
+    alt_description?: string;
+  } | null;
+  onClose: () => void;
+}
+
+const ImageModal: React.FC<ImageModalProps> = ({ image, onClose }) => {
+  if (!image) return null;
+
   const { urls, alt_description } = image;
 
   return (
@@ -20,14 +30,9 @@ const ImageModal = ({ image, onClose }) => {
         },
       }}
     >
-      <img src={urls.regular} alt={alt_description} />
+      <img src={urls.regular} alt={alt_description || 'Image'} />
     </Modal>
   );
-};
-
-ImageModal.propTypes = {
-    image: PropTypes.func.isRequired,
-    onClose: PropTypes.func.isRequired,
 };
 
 export default ImageModal;
