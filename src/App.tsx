@@ -8,13 +8,22 @@ import LoadMoreBtn from './components/LoadMoreBtn/LoadMoreBtn';
 import ImageModal from './components/ImageModal/ImageModal';
 import LoaderMessage from './components/Loader/Loader';
 
-const App = () => {
-  const [query, setQuery] = useState('');
-  const [images, setImages] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
-  const [page, setPage] = useState(1);
-  const [selectedImage, setSelectedImage] = useState(null);
+interface Image {
+  id: string;
+  urls: {
+    thumb: string;
+    regular: string;
+  };
+  alt_description?: string;
+}
+
+const App: React.FC = () => {
+  const [query, setQuery] = useState<string>('');
+  const [images, setImages] = useState<Image[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
+  const [page, setPage] = useState<number>(1);
+  const [selectedImage, setSelectedImage] = useState<Image | null>(null);
 
   useEffect(() => {
     const fetchImages = async () => {
@@ -28,7 +37,7 @@ const App = () => {
         });
         setImages(prevImages => [...prevImages, ...response.data.results]);
         setError(null);
-      } catch (error) {
+      } catch (error: any) {
         console.error('Error fetching images:', error.response || error.message);
         setError('Failed to fetch images');
       } finally {
@@ -41,7 +50,7 @@ const App = () => {
     }
   }, [query, page]);
 
-  const handleSearchSubmit = newQuery => {
+  const handleSearchSubmit = (newQuery: string) => {
     if (newQuery === '') {
       toast.error('Please enter a search term');
       return;

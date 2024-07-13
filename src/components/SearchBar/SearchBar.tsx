@@ -1,19 +1,21 @@
+import { useState, ChangeEvent, FormEvent } from 'react';
 import styles from './SearchBar.module.css';
-import { useState } from 'react';
-import PropTypes from 'prop-types';
-
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 
-const SearchBar = ({ onSubmit }) => {
-  const [inputValue, setInputValue] = useState('');
+interface SearchBarProps {
+  onSubmit: (inputValue: string) => void;
+}
 
-  const handleChange = (e) => {
+const SearchBar: React.FC<SearchBarProps> = ({ onSubmit }) => {
+  const [inputValue, setInputValue] = useState<string>('');
+
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (inputValue.trim() === '') {
       return;
@@ -40,10 +42,6 @@ const SearchBar = ({ onSubmit }) => {
       </form>
     </header>
   );
-};
-
-SearchBar.propTypes = {
-    onSubmit: PropTypes.func.isRequired,
 };
 
 export default SearchBar;

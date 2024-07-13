@@ -1,10 +1,13 @@
-interface ImageCardProps {
-  image: {
-    urls: {
-      thumb: string;
-    };
-    alt_description?: string;
+interface Image {
+  urls: {
+    thumb: string;
+    regular: string;
   };
+  alt_description?: string;
+}
+
+interface ImageCardProps {
+  image: Image;
 }
 
 const ImageCard: React.FC<ImageCardProps> = ({ image }) => {
