@@ -7,15 +7,7 @@ import ErrorMessage from './components/ErrorMessage/ErrorMessage';
 import LoadMoreBtn from './components/LoadMoreBtn/LoadMoreBtn';
 import ImageModal from './components/ImageModal/ImageModal';
 import LoaderMessage from './components/Loader/Loader';
-
-interface Image {
-  id: string;
-  urls: {
-    thumb: string;
-    regular: string;
-  };
-  alt_description?: string;
-}
+import { ApiResponse, Image } from '../src/types/api';
 
 const App: React.FC = () => {
   const [query, setQuery] = useState<string>('');
@@ -29,7 +21,7 @@ const App: React.FC = () => {
     const fetchImages = async () => {
       setLoading(true);
       try {
-        const response = await axios.get('https://api.unsplash.com/search/photos', {
+        const response = await axios.get<ApiResponse>('https://api.unsplash.com/search/photos', {
           params: { query, page, per_page: 12 },
           headers: {
             Authorization: `Client-ID ejxFSFIFRaj69H35OnJtbUJb4DQ3p23sjfoLE-1UzAQ`,
